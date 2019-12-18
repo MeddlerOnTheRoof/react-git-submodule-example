@@ -17,17 +17,17 @@ class List extends React.Component {
         this.state = {
             dataState: DEFAULT_DATA_STATE,
             pageSize: DEFAULT_DATA_STATE.take - DEFAULT_DATA_STATE.skip,
-            widgets: process(props.widgets.slice(0), DEFAULT_DATA_STATE)
+            gadgets: process(props.gadgets.slice(0), DEFAULT_DATA_STATE)
         };
     };
 
-    dataStateChange = e => this.setState({ dataState: e.data, widgets: process(this.props.widgets.slice(0), e.data) });
+    dataStateChange = e => this.setState({ dataState: e.data, gadgets: process(this.props.gadgets.slice(0), e.data) });
 
     render = () => {
         return <React.Fragment>
-            <h1>Widgets List</h1>
+            <h1>Gadgets List</h1>
             <Grid
-                data={this.state.widgets}
+                data={this.state.gadgets}
                 {...this.state.dataState}
                 onDataStateChange={this.dataStateChange}
                 sortable={true}
@@ -51,7 +51,7 @@ class List extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        widgets: state.widget.widgets
+        gadgets: state.gadget.gadgets
     };
 };
 

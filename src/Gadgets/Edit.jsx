@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addWidget, updateWidget } from './actions';
+import { addGadget, updateGadget } from './actions';
 
 class Edit extends React.Component {
     constructor(props) {
         super(props);
 
-        const defaultWidget = {
+        const defaultGadget = {
             id: 0,
             name: '',
             category: '',
@@ -17,8 +17,8 @@ class Edit extends React.Component {
         };
 
         this.state = {
-            pristineWidget: defaultWidget,
-            widget: defaultWidget
+            pristineGadget: defaultGadget,
+            gadget: defaultGadget
         };
     };
 
@@ -27,25 +27,25 @@ class Edit extends React.Component {
 
         // todo: form validation
 
-        this.state.widget.id > 0 ?
-            this.props.updateWidget(this.state.widget) :
-            this.props.addWidget(this.state.widget);
+        this.state.gadget.id > 0 ?
+            this.props.updateGadget(this.state.gadget) :
+            this.props.addGadget(this.state.gadget);
 
-        this.props.history.push('/widgets/list');
+        this.props.history.push('/gadgets/list');
     };
 
     componentDidMount = () => {
         const { id } = this.props.match.params;
-        const widget = this.props.widgets.find(w => w.id === parseInt(id));
+        const gadget = this.props.gadgets.find(w => w.id === parseInt(id));
 
-        if (!!widget)
-            this.setState({ pristineWidget: widget, widget: widget });
+        if (!!gadget)
+            this.setState({ pristineGadget: gadget, gadget: gadget });
     };
 
 
     render = () => {
         return <React.Fragment>
-            <h1>Widgets Edit</h1>
+            <h1>Gadgets Edit</h1>
             <form>
                 <div className='form-group'>
                     <label htmlFor='name'>Name</label>
@@ -55,8 +55,8 @@ class Edit extends React.Component {
                         name='name'
                         className='form-control'
                         placeholder='Enter name'
-                        value={this.state.widget.name}
-                        onChange={e => this.setState({ widget: { ...this.state.widget, name: e.target.value } })} />
+                        value={this.state.gadget.name}
+                        onChange={e => this.setState({ gadget: { ...this.state.gadget, name: e.target.value } })} />
                 </div>
 
 
@@ -69,10 +69,10 @@ class Edit extends React.Component {
                                 id='category'
                                 name='category'
                                 className='form-control'
-                                value={this.state.widget.category}
-                                onChange={e => this.setState({ widget: { ...this.state.widget, category: e.target.value } })}>
+                                value={this.state.gadget.category}
+                                onChange={e => this.setState({ gadget: { ...this.state.gadget, category: e.target.value } })}>
                                 <option value=''>Choose category</option>
-                                {this.props.widgetCategories.map(wc => <option key={wc} value={wc}>{wc}</option>)}
+                                {this.props.gadgetCategories.map(wc => <option key={wc} value={wc}>{wc}</option>)}
                             </select>
                         </div>
                     </div>
@@ -85,8 +85,8 @@ class Edit extends React.Component {
                                 id='supplier'
                                 name='supplier'
                                 className='form-control'
-                                value={this.state.widget.supplier}
-                                onChange={e => this.setState({ supplier: { ...this.state.widget, supplier: e.target.value } })}>
+                                value={this.state.gadget.supplier}
+                                onChange={e => this.setState({ supplier: { ...this.state.gadget, supplier: e.target.value } })}>
                                 <option value=''>Choose supplier</option>
                                 {this.props.suppliers.map(s => <option key={s} value={s}>{s}</option>)}
                             </select>
@@ -104,8 +104,8 @@ class Edit extends React.Component {
                                 name='cost'
                                 className='form-control'
                                 placeholder='Enter cost'
-                                value={this.state.widget.cost}
-                                onChange={e => this.setState({ widget: { ...this.state.widget, cost: e.target.value } })} />
+                                value={this.state.gadget.cost}
+                                onChange={e => this.setState({ gadget: { ...this.state.gadget, cost: e.target.value } })} />
                         </div>
                     </div>
 
@@ -118,8 +118,8 @@ class Edit extends React.Component {
                                 name='price'
                                 className='form-control'
                                 placeholder='Enter price'
-                                value={this.state.widget.price}
-                                onChange={e => this.setState({ widget: { ...this.state.widget, price: e.target.value } })} />
+                                value={this.state.gadget.price}
+                                onChange={e => this.setState({ gadget: { ...this.state.gadget, price: e.target.value } })} />
                         </div>
                     </div>
 
@@ -132,8 +132,8 @@ class Edit extends React.Component {
                                 name='volume'
                                 className='form-control'
                                 placeholder='Enter volume'
-                                value={this.state.widget.volume}
-                                onChange={e => this.setState({ widget: { ...this.state.widget, volume: e.target.value } })} />
+                                value={this.state.gadget.volume}
+                                onChange={e => this.setState({ gadget: { ...this.state.gadget, volume: e.target.value } })} />
                         </div>
                     </div>
                 </div>
@@ -146,7 +146,7 @@ class Edit extends React.Component {
                     </div>
                     <div className='col'>
                         <div className='form-group'>
-                            <button type='reset' className='btn btn-secondary' onClick={() => this.setState({ widget: this.state.pristineWidget })}>Reset</button>
+                            <button type='reset' className='btn btn-secondary' onClick={() => this.setState({ gadget: this.state.pristineGadget })}>Reset</button>
                         </div>
                     </div>
                 </div>
@@ -158,18 +158,18 @@ class Edit extends React.Component {
 const mapStateToProps = state => {
     return {
         suppliers: state.platform.suppliers,
-        widgets: state.widget.widgets,
-        widgetCategories: state.widget.widgetCategories
+        gadgets: state.gadget.gadgets,
+        gadgetCategories: state.gadget.gadgetCategories
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        addWidget: widget => {
-            dispatch(addWidget(widget));
+        addGadget: gadget => {
+            dispatch(addGadget(gadget));
         },
-        updateWidget: updatedWidget => {
-            dispatch(updateWidget(updatedWidget));
+        updateGadget: updatedGadget => {
+            dispatch(updateGadget(updatedGadget));
         }
     }
 };
